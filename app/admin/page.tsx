@@ -17,7 +17,7 @@ type Ticket = {
   priority: string;
   source: string;
   created_at: string;
-  offices: { name: string } | null;
+  offices: { name: string }[] | null;
 };
 
 const ALL_STATUSES = ['New', 'Open', 'Waiting on Agent', 'Waiting on Vendor', 'Resolved', 'Closed'];
@@ -187,7 +187,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
                     <p className="text-xs text-slate-400">{ticket.requester_email}</p>
                   </td>
                   <td className="px-4 py-3 text-slate-600 text-sm">
-                    {ticket.offices?.name || <span className="text-slate-300">—</span>}
+                    {ticket.offices?.[0]?.name || <span className="text-slate-300">—</span>}
                   </td>
                   <td className="px-4 py-3 text-slate-400 text-xs whitespace-nowrap">
                     {timeAgo(ticket.created_at)}

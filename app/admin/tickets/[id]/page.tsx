@@ -24,7 +24,7 @@ type Ticket = {
   priority: string;
   source: string;
   created_at: string;
-  offices: { name: string; city: string | null } | null;
+  offices: { name: string; city: string | null }[] | null;
 };
 
 type TicketMessage = {
@@ -211,7 +211,7 @@ export default async function TicketDetailPage({ params }: TicketPageProps) {
                 <dl className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <dt className="text-slate-500">Office</dt>
-                    <dd className="font-medium text-slate-800">{ticket.offices?.name || '—'}</dd>
+                    <dd className="font-medium text-slate-800">{ticket.offices?.[0]?.name || '—'}</dd>
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-slate-500">Category</dt>
