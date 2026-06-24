@@ -111,7 +111,6 @@ export default async function KBAdminPage() {
                             'use server';
                             await deleteArticle(article.id);
                           }}
-                          onSubmit="return confirm('Delete this article?')"
                         >
                           <button type="submit" className="text-sm text-red-500 hover:text-red-700">
                             Delete
