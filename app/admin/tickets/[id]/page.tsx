@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { supabase } from '../../../../lib/supabaseClient';
-import { updateTicketPriority, updateTicketStatus, addInternalNote } from './actions';
+import { updateTicketPriority, updateTicketStatus, addInternalNote, sendReplyToRequester } from './actions';
 import StatusBadge from '../../../components/StatusBadge';
 import PriorityBadge from '../../../components/PriorityBadge';
 import AdminNav from '../../../components/AdminNav';
@@ -164,6 +164,36 @@ export default async function TicketDetailPage({ params }: TicketPageProps) {
                   ))}
                 </div>
               )}
+
+              {/* Reply to requester */}
+              <div className="rounded-2xl bg-white border border-blue-200 shadow-sm p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <h2 className="text-sm font-semibold text-slate-700">Reply to Requester</h2>
+                  <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-medium">Visible to requester · sends email</span>
+                </div>
+                <form
+                  action={async (formData: FormData) => {
+                    'use server';
+                    await sendReplyToRequester(ticket.id, formData);
+                  }}
+                >
+                  <textarea
+                    name="body"
+                    rows={4}
+                    required
+                    placeholder={`Reply to ${ticket.requester_name}…`}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-400 resize-none"
+                  />
+                  <div className="mt-3 flex justify-end">
+                    <button
+                      type="submit"
+                      className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                    >
+                      Send Reply
+                    </button>
+                  </div>
+                </form>
+              </div>
 
               {/* Add internal note */}
               <div className="rounded-2xl bg-white border border-slate-200 shadow-sm p-6">
